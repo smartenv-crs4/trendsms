@@ -90,11 +90,11 @@ router.post('/trends',au.doku({
 }), function (request, res) {
 
     var trend = new Trend();
-    trend.createdAt = request.payload.createdAt;
-    trend.idCustomer = request.payload.idCustomer;
-    trend.category = request.payload.category;
-    trend.keyword = request.payload.keyword;
-    trend.results = request.payload.results;
+    trend.createdAt = request.body.createdAt;
+    trend.idCustomer = request.body.idCustomer;
+    trend.category = request.body.category;
+    trend.keyword = request.body.keyword;
+    trend.results = request.body.results;
 
     trend.save().then(function (trend) {
         res.status(201).send('/api/trends/' + trend._id); // HTTP 201 created

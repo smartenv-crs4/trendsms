@@ -11,16 +11,22 @@ var boom = require('express-boom');
 var index = require('./routes/index');
 var trends = require('./routes/trends');
 
+var prefix = '/api/v1';
+
+
 var Mongoose = require('mongoose');
 
 Mongoose.Promise = require('bluebird');
 // MongoDB Connection
-Mongoose.connect('mongodb://seidue.crs4.it:3996/trends_old', function () {
+Mongoose.connect('mongodb://seidue.crs4.it:3996/trends', function () {
   console.log("Connected");
 });
 
 
 var app = express();
+
+app.set('port', process.env.PORT || '3000');
+app.set("apiprefix", prefix);
 
 app.use(queryHandler.fields());
 app.use(queryHandler.filter());
@@ -42,7 +48,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', trends);
+app.use(prefix, trends);
 
 
 
@@ -69,7 +75,7 @@ audoku.apidocs({
   docspath: '/docs',
   routers: [
     {
-      basepath: url+"/api" ,
+      basepath: "http://localhost:"+ app.get('port')+prefix ,
       router: trends
     }]
 });
