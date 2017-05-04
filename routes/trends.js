@@ -68,33 +68,48 @@ router.post('/trends',au.doku({
     fields: {
         createdAt: {
             description: 'The date of the search',
-            type: 'date', required: false
+            type: 'date', required: true
         },
-        idCustomer: {
-            description: 'The customer id',
-            type: 'integer', required: true
+        idUser: {
+            description: 'The user id',
+            type: 'integer', required: false
+        },
+        userType: {
+            description: 'The user type (customer/supplier/guest)',
+            type: 'integer', required: false
         },
         category: {
             description: 'The category identifier',
-            type: 'string', required: true
+            type: 'string', required: false
         },
         keyword: {
             description: 'The search keywords/keyphrase',
+            type: 'string', required: false
+        },
+        searchType: {
+            description: 'Search type (product/supplier)',
             type: 'string', required: true
         },
         results: {
             description: 'The number of results',
             type: 'integer', required: true
+        },
+        lang: {
+            description: 'Site language',
+            type: 'string', required: true
         }
     }
 }), function (request, res) {
 
     var trend = new Trend();
     trend.createdAt = request.body.createdAt;
-    trend.idCustomer = request.body.idCustomer;
+    trend.idUser = request.body.idUser;
+    trend.userType = request.body.userType;
     trend.category = request.body.category;
     trend.keyword = request.body.keyword;
+    trend.searchType = request.body.searchType;
     trend.results = request.body.results;
+    trend.lang = request.body.lang;
 
     trend.save().then(function (trend) {
         res.status(201).send('/api/trends/' + trend._id); // HTTP 201 created
