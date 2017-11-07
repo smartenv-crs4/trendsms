@@ -11,7 +11,7 @@ var boom = require('express-boom');
 var index = require('./routes/index');
 var trends = require('./routes/trends');
 
-var prefix = '/api/v1';
+var prefix = '';
 
 
 var Mongoose = require('mongoose');
