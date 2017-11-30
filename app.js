@@ -33,6 +33,7 @@ app.use(queryHandler.filter());
 //app.use(queryHandler.pagination());
 app.use(boom());
 
+
 var paginate = require('express-paginate');
 app.use(paginate.middleware(10, 50));
 
@@ -40,9 +41,10 @@ app.use(paginate.middleware(10, 50));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use('/', index);
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
