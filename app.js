@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var queryHandler = require('express-api-queryhandler');
 var boom = require('express-boom');
+var config = require('propertiesmanager').conf;
 
 
 var index = require('./routes/index');
@@ -18,9 +19,15 @@ var Mongoose = require('mongoose');
 
 Mongoose.Promise = require('bluebird');
 // MongoDB Connection
+Mongoose.connect('mongodb://' + config.dbHost + ':' + config.dbPort + '/' + config.dbName, function () {
+  console.log("Connected");
+});
+
+/*
 Mongoose.connect('mongodb://seidue.crs4.it:3996/trends', function () {
   console.log("Connected");
 });
+*/
 
 
 var app = express();
